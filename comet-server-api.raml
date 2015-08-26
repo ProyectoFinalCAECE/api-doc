@@ -24,6 +24,33 @@ version: v1
                     {
                       "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFsaWFzIjoidGVzdF9uYW1ldGVzdF9sYXN0X25hbWUiLCJleHAiOjE0NDMxNTI0ODcsImlhdCI6MTQ0MDU2MDQ4N30.b27aiyshkp8f1XbpMoaL57s_OSASmf8ZPHt0VVQN6yg"
                     }
+  get:
+    description: retrieves current User's Account information.
+    headers:
+      Authorization:
+       description: |
+         Token returned by login service to check user is authorized to perform this action.
+       type: string
+       required: true
+       example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            example: |
+                    {
+                      "user": {
+                        "id": 1,
+                        "firstName": "test",
+                        "lastName": "test",
+                        "alias": "testtest",
+                        "email": "test@test.com",
+                        "profilePicture": null
+                      }
+                    }
+
   /{id}:
     put:
       description: for actualization of existent User Account.
