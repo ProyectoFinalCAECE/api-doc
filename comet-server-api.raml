@@ -5,26 +5,72 @@ version: v1
 
 /user:
   post:
-    description: allows creation of new User Account.
+    description: for creation of new User Account.
+    body:
+      application/json:
+        example: |
+                 {
+                  "firstName":"test_name",
+                  "lastName":"test_last_name",
+                  "email":"test@test.com",
+                  "password":"test_pass"
+                 }
     responses:
       200:
         description: OK
         body:
           application/json:
-            example:
-  put:
-    description: allows actualization of existent User Account.
-
-  /login:
-    post:
-      description: logs in an User with provided credentials and creates a session.
+            example: |
+                    {
+                      "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFsaWFzIjoidGVzdF9uYW1ldGVzdF9sYXN0X25hbWUiLCJleHAiOjE0NDMxNTI0ODcsImlhdCI6MTQ0MDU2MDQ4N30.b27aiyshkp8f1XbpMoaL57s_OSASmf8ZPHt0VVQN6yg"
+                    }
+  /{id}:
+    put:
+      description: for actualization of existent User Account.
+      body:
+        application/json:
+          example: |
+                   {
+                    "firstName":"test_name",
+                    "lastName":"test_last_name",
+                    "alias":"the best alias"
+                   }
       responses:
         200:
           description: OK
           body:
             application/json:
-              example:
+              example: |
+                      {
+                        "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFsaWFzIjoidGVzdF9uYW1ldGVzdF9sYXN0X25hbWUiLCJleHAiOjE0NDMxNTI0ODcsImlhdCI6MTQ0MDU2MDQ4N30.b27aiyshkp8f1XbpMoaL57s_OSASmf8ZPHt0VVQN6yg"
+                      }
+  /login:
+    post:
+      description: logs in an User with provided credentials and returns a session token.
+      body:
+        application/json:
+          example: |
+                   {
+                    "email":"test@test.com",
+                    "password":"testtest"
+                   }
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              example: |
+                      {
+                        "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFsaWFzIjoidGVzdF9uYW1ldGVzdF9sYXN0X25hbWUiLCJleHAiOjE0NDMxNTI0ODcsImlhdCI6MTQ0MDU2MDQ4N30.b27aiyshkp8f1XbpMoaL57s_OSASmf8ZPHt0VVQN6yg"
+                      }
 
+  /logout:
+    post:
+      description: logs out current User and destroys session token.
+      responses:
+        200:
+          description: OK
+        
 #/projects:
 #  get:
 #  post:
