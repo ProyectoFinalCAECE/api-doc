@@ -27,6 +27,14 @@ version: v1
   /{id}:
     put:
       description: for actualization of existent User Account.
+      headers:
+        Authorization:
+         description: |
+           Token returned by login service to check user is authorized to perform this action.
+         type: string
+         required: true
+         example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
       body:
         application/json:
           example: |
@@ -70,7 +78,7 @@ version: v1
       responses:
         200:
           description: OK
-        
+
 #/projects:
 #  get:
 #  post:
