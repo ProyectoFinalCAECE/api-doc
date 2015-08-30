@@ -3,82 +3,7 @@
 title: Comet Server
 version: v1
 
-/user:
-  post:
-    description: for creation of new User Account.
-    body:
-      application/json:
-        example: |
-                 {
-                  "firstName":"test_name",
-                  "lastName":"test_last_name",
-                  "email":"test@test.com",
-                  "password":"test_pass"
-                 }
-    responses:
-      200:
-        description: OK
-        body:
-          application/json:
-            example: |
-                    {
-                      "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFsaWFzIjoidGVzdF9uYW1ldGVzdF9sYXN0X25hbWUiLCJleHAiOjE0NDMxNTI0ODcsImlhdCI6MTQ0MDU2MDQ4N30.b27aiyshkp8f1XbpMoaL57s_OSASmf8ZPHt0VVQN6yg"
-                    }
-  get:
-    description: retrieves current User's Account information.
-    headers:
-      Authorization:
-       description: |
-         Token returned by login service to check user is authorized to perform this action.
-       type: string
-       required: true
-       example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
-
-    responses:
-      200:
-        description: OK
-        body:
-          application/json:
-            example: |
-                    {
-                      "user": {
-                        "id": 1,
-                        "firstName": "test",
-                        "lastName": "test",
-                        "alias": "testtest",
-                        "email": "test@test.com",
-                        "profilePicture": null
-                      }
-                    }
-
-  /{id}:
-    put:
-      description: for actualization of existent User Account.
-      headers:
-        Authorization:
-         description: |
-           Token returned by login service to check user is authorized to perform this action.
-         type: string
-         required: true
-         example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
-
-      body:
-        application/json:
-          example: |
-                   {
-                    "firstName":"test_name",
-                    "lastName":"test_last_name",
-                    "alias":"the best alias"
-                   }
-      responses:
-        200:
-          description: OK
-          body:
-            application/json:
-              example: |
-                      {
-                        "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFsaWFzIjoidGVzdF9uYW1ldGVzdF9sYXN0X25hbWUiLCJleHAiOjE0NDMxNTI0ODcsImlhdCI6MTQ0MDU2MDQ4N30.b27aiyshkp8f1XbpMoaL57s_OSASmf8ZPHt0VVQN6yg"
-                      }
+/account:
   /login:
     post:
       description: logs in an User with provided credentials and returns a session token.
@@ -101,10 +26,167 @@ version: v1
 
   /logout:
     post:
-      description: logs out current User and destroys session token.
+      description: Destroy currently logged User's session
+      responses:
+        302:
+
+  /confirm:
+    post:
+      description: Allows User Account confirmation with token previously sent via email.
+      body:
+        application/json:
+          example: |
+                   {
+                    "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjUsImFjdGlvbiI6InJlY292ZXIiLCJleHAiOjE0NDA5MDA1NjUsImlhdCI6MTQ0MDg5OTM2NX0.BcimZBODaEjKclxkbQr4nICVZpvqzbweEGNZ_68G_dw"
+                   }
       responses:
         200:
-          description: OK
+
+    /token:
+      post:
+        description: Resends User's Account confirmation link via email.
+        headers:
+          Authorization:
+           description: |
+             Token returned by login service to check if currently logged User is authorized to perform this action.
+           type: string
+           required: true
+           example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+        responses:
+          200:
+
+  /password:
+    /token:
+      post:
+        description: Sends password recovery token to User's email account, if account exists and is confirmed.
+        body:
+          application/json:
+            example: |
+                     {
+                      "email":"test@test.com"
+                     }
+        responses:
+          200:
+
+    /recover:
+      post:
+        description: Sets new password to User account if provided token is valid.
+        body:
+          application/json:
+            example: |
+                     {
+                     "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjUsImFjdGlvbiI6InJlY292ZXIiLCJleHAiOjE0NDA5NTY4MDcsImlhdCI6MTQ0MDk1NTYwN30.F9MaUvOQY8ciz86IuUQq89jFKrq5u_LXpGEUbgPKahY",
+                     "newpassword":"the_new_password"
+                     }
+        responses:
+          200:
+
+    /renew:
+      post:
+        description: Sets new password for currently logged user, if old password is correct.
+        headers:
+          Authorization:
+           description: |
+             Token returned by login service to check user is authorized to perform this action.
+           type: string
+           required: true
+           example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+        body:
+          application/json:
+            example: |
+                     {
+                      "oldpassword":"the_old_password",
+                      "newpassword":"the_new_password"
+                     }
+        responses:
+          200:
+
+/user:
+  post:
+    description: Create new User Account.
+    body:
+      application/json:
+        example: |
+                 {
+                  "firstName":"test_name",
+                  "lastName":"test_last_name",
+                  "email":"test@test.com",
+                  "password":"test_pass"
+                 }
+    responses:
+      200:
+        description:
+        body:
+          application/json:
+            example: |
+                    {
+                      "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFsaWFzIjoidGVzdF9uYW1ldGVzdF9sYXN0X25hbWUiLCJleHAiOjE0NDMxNTI0ODcsImlhdCI6MTQ0MDU2MDQ4N30.b27aiyshkp8f1XbpMoaL57s_OSASmf8ZPHt0VVQN6yg"
+                    }
+  get:
+    description: Get currently logged User's full Account information.
+    headers:
+      Authorization:
+       description: |
+         Token returned by login service to check if currently logged User is authorized to perform this action.
+       type: string
+       required: true
+       example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+    responses:
+      200:
+        description:
+        body:
+          application/json:
+            example: |
+                    {
+                      "user": {
+                        "id": 1,
+                        "firstName": "test",
+                        "lastName": "test",
+                        "alias": "testtest",
+                        "email": "test@test.com",
+                        "profilePicture": null,
+                        "confirmed": "true"
+                      }
+                    }
+
+  put:
+    description: Update currently logged User's Account information.
+    headers:
+      Authorization:
+       description: |
+         Token returned by login service to check if currently logged User is authorized to perform this action.
+       type: string
+       required: true
+       example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+    body:
+      application/json:
+        example: |
+                 {
+                  "firstName":"test_name",
+                  "lastName":"test_last_name",
+                  "alias":"the best alias"
+                 }
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            example: |
+                    {
+                      "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjYsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFsaWFzIjoidGVzdF9uYW1ldGVzdF9sYXN0X25hbWUiLCJleHAiOjE0NDMxNTI0ODcsImlhdCI6MTQ0MDU2MDQ4N30.b27aiyshkp8f1XbpMoaL57s_OSASmf8ZPHt0VVQN6yg"
+                    }
+
+  delete:
+    description: Delete currently logged User's Account.
+    headers:
+      Authorization:
+       description: |
+         Token returned by login service to check if currently logged User is authorized to perform this action.
+       type: string
+       required: true
+       example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+    responses:
+      302:
 
 #/projects:
 #  get:
