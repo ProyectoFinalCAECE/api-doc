@@ -213,9 +213,141 @@ version: v1
     responses:
       302:
 
-#/projects:
-#  get:
-#  post:
+/project:
+  post:
+    description: Create new User Project and invite members, if provided and valid.
+    headers:
+      Authorization:
+       description: |
+         Token returned by login service to check if currently logged User is authorized to perform this action.
+       type: string
+       required: true
+       example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+    body:
+      application/json:
+        example: |
+                {
+                  "name": "the_project_name",
+                  "description": "the_project_description",
+                  "members": [
+                    {
+                      "address": "jsaucedo.dev@gmail.com"
+                    },
+                    {
+                      "address": "juan.ignacio.saucedo@gmail.com"
+                    },
+                    {
+                      "address": "juan.ignacio.saucedo@gmail"
+                    }
+                  ]
+                }
+    responses:
+      200:
+        description:
+        body:
+          application/json:
+            example: |
+              {
+                  "id": 1,
+                  "name": "the_project_name",
+                  "description": "the_project_description",
+                  "createdAt": "2015-09-10T03:24:57.354Z",
+                  "isOwner": true
+              }
+  get:
+    description: Get all currently logged User Project's information. Active Projects, showing first the most recently created.
+    headers:
+      Authorization:
+       description: |
+         Token returned by login service to check if currently logged User is authorized to perform this action.
+       type: string
+       required: true
+       example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+    responses:
+      200:
+        description:
+        body:
+          application/json:
+            example: |
+                      [
+                        {
+                          "id": 4,
+                          "name": "the name",
+                          "description": "the descriptionb",
+                          "createdAt": "2015-09-08T23:27:24.208Z",
+                          "isOwner": true
+                        },
+                        {
+                          "id": 3,
+                          "name": "the name",
+                          "description": "the descriptionb",
+                          "createdAt": "2015-09-08T23:25:14.476Z",
+                          "isOwner": true
+                        },
+                        {
+                          "id": 2,
+                          "name": "the name",
+                          "description": "the descriptionb",
+                          "createdAt": "2015-09-08T23:23:15.208Z",
+                          "isOwner": true
+                        }
+                      ]
+
+  /{id}:
+    get:
+      description:  Get project's information.
+      headers:
+        Authorization:
+         description: |
+           Token returned by login service to check if currently logged User is authorized to perform this action.
+         type: string
+         required: true
+         example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+      responses:
+        200:
+          description:
+          body:
+            application/json:
+              example: |
+                {
+                    "id": 1,
+                    "name": "the_project_name",
+                    "description": "the_project_description",
+                    "createdAt": "2015-09-10T03:24:57.354Z",
+                    "isOwner": true
+                }
+
+    /invitations:
+      post:
+        description:  Sends invitations to be part of a project to provided email accounts.
+        headers:
+          Authorization:
+           description: |
+             Token returned by login service to check if currently logged User is authorized to perform this action.
+           type: string
+           required: true
+           example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+        body:
+          application/json:
+            example: |
+                    {
+                      "addresses": [
+                        {
+                          "address": "test1@test1.com"
+                        },
+                        {
+                          "address": "test2@test2.com"
+                        }
+                      ]
+                    }
+
+        responses:
+          200:
+
 #  put:
 
 #/channels:
