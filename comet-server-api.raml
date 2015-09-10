@@ -55,6 +55,31 @@ version: v1
         responses:
           200:
 
+  /reopen:
+    post:
+      description: Allows User to reopen his Comet Account, setting a new password. Token previously retrieved from /reopen/token
+      body:
+        application/json:
+          example: |
+                   {
+                    "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjUsImFjdGlvbiI6InJlY292ZXIiLCJleHAiOjE0NDA5MDA1NjUsImlhdCI6MTQ0MDg5OTM2NX0.BcimZBODaEjKclxkbQr4nICVZpvqzbweEGNZ_68G_dw",
+                    "newpassword":"the_new_password"
+                   }
+      responses:
+        200:
+
+    /token:
+      post:
+        description: User gets an email with a token to reopen its account.
+        body:
+          application/json:
+            example: |
+                     {
+                      "email":"test@test.com"
+                     }
+        responses:
+          200:
+
   /password:
     /token:
       post:
