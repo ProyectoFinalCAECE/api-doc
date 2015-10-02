@@ -3,7 +3,7 @@
 title: Comet Server
 version: v1
 
-/account:
+/accounts:
   /login:
     post:
       description: logs in an User with provided credentials and returns a session token.
@@ -126,7 +126,7 @@ version: v1
         responses:
           200:
 
-/user:
+/users:
   post:
     description: Create new User Account.
     body:
@@ -219,7 +219,7 @@ version: v1
     responses:
       302:
 
-/project:
+/projects:
   post:
     description: Create new User Project and invite members, if provided and valid.
     headers:
