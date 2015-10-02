@@ -255,11 +255,24 @@ version: v1
           application/json:
             example: |
               {
-                  "id": 1,
-                  "name": "the_project_name",
-                  "description": "the_project_description",
-                  "createdAt": "2015-09-10T03:24:57.354Z",
-                  "isOwner": true
+                "id": 33,
+                "name": "the_project_name",
+                "description": "the_project_desc",
+                "createdAt": "2015-09-25T00:25:55.469Z",
+                "isOwner": true,
+                "state": "C",
+                "members": [
+                  {
+                    "id": 2,
+                    "email": "themail@gmail.com",
+                    "profilePicture": "/static/0.33087815903127193juavatar.png",
+                    "firstName": "first_name",
+                    "lastName": "last_name",
+                    "alias": "alias",
+                    "createdAt": "2015-09-15T04:13:54.564Z"
+                  }
+                ],
+                "integrations": []
               }
   get:
     description: Get all currently logged User Project's information. Active Projects, showing first the most recently created.
@@ -279,25 +292,44 @@ version: v1
             example: |
                       [
                         {
-                          "id": 4,
-                          "name": "the name",
-                          "description": "the descriptionb",
-                          "createdAt": "2015-09-08T23:27:24.208Z",
-                          "isOwner": true
+                          "id": 33,
+                          "name": "the_project_name",
+                          "description": "the_project_desc",
+                          "createdAt": "2015-09-25T00:25:55.469Z",
+                          "isOwner": true,
+                          "state": "C",
+                          "members": [
+                            {
+                              "id": 2,
+                              "email": "themail@gmail.com",
+                              "profilePicture": "/static/0.33087815903127193juavatar.png",
+                              "firstName": "first_name",
+                              "lastName": "last_name",
+                              "alias": "alias",
+                              "createdAt": "2015-09-15T04:13:54.564Z"
+                            }
+                          ],
+                          "integrations": []
                         },
                         {
-                          "id": 3,
-                          "name": "the name",
-                          "description": "the descriptionb",
-                          "createdAt": "2015-09-08T23:25:14.476Z",
-                          "isOwner": true
-                        },
-                        {
-                          "id": 2,
-                          "name": "the name",
-                          "description": "the descriptionb",
-                          "createdAt": "2015-09-08T23:23:15.208Z",
-                          "isOwner": true
+                          "id": 34,
+                          "name": "the_project_name",
+                          "description": "the_project_desc",
+                          "createdAt": "2015-09-25T00:25:55.469Z",
+                          "isOwner": true,
+                          "state": "C",
+                          "members": [
+                            {
+                              "id": 2,
+                              "email": "themail@gmail.com",
+                              "profilePicture": "/static/0.33087815903127193juavatar.png",
+                              "firstName": "first_name",
+                              "lastName": "last_name",
+                              "alias": "alias",
+                              "createdAt": "2015-09-15T04:13:54.564Z"
+                            }
+                          ],
+                          "integrations": []
                         }
                       ]
 
@@ -319,11 +351,66 @@ version: v1
             application/json:
               example: |
                 {
-                    "id": 1,
-                    "name": "the_project_name",
-                    "description": "the_project_description",
-                    "createdAt": "2015-09-10T03:24:57.354Z",
-                    "isOwner": true
+                  "id": 33,
+                  "name": "the_project_name",
+                  "description": "the_project_desc",
+                  "createdAt": "2015-09-25T00:25:55.469Z",
+                  "isOwner": true,
+                  "state": "C",
+                  "members": [
+                    {
+                      "id": 2,
+                      "email": "themail@gmail.com",
+                      "profilePicture": "/static/0.33087815903127193juavatar.png",
+                      "firstName": "first_name",
+                      "lastName": "last_name",
+                      "alias": "alias",
+                      "createdAt": "2015-09-15T04:13:54.564Z"
+                    }
+                  ],
+                  "integrations": []
+                }
+    put:
+      description: Update a Project of currently logged User ownership.
+      headers:
+        Authorization:
+         description: |
+           Token returned by login service to check if currently logged User is authorized to perform this action.
+         type: string
+         required: true
+         example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+      body:
+        application/json:
+          example: |
+            {
+                "name": "the_updated_project_name",
+                "description": "the_updated_project_description"
+            }
+      responses:
+        200:
+          description:
+          body:
+            application/json:
+              example: |
+                {
+                  "id": 33,
+                  "name": "the_project_name",
+                  "description": "the_project_desc",
+                  "createdAt": "2015-09-25T00:25:55.469Z",
+                  "isOwner": true,
+                  "state": "C",
+                  "members": [
+                    {
+                      "id": 2,
+                      "email": "themail@gmail.com",
+                      "profilePicture": "/static/0.33087815903127193juavatar.png",
+                      "firstName": "first_name",
+                      "lastName": "last_name",
+                      "alias": "alias",
+                      "createdAt": "2015-09-15T04:13:54.564Z"
+                    }
+                  ],
+                  "integrations": []
                 }
 
     /invitations:
@@ -354,6 +441,24 @@ version: v1
         responses:
           200:
 
+      /accept:
+        post:
+          description: Allows currently logged User to accept an invitation to a Project.
+          headers:
+            Authorization:
+             description: |
+               Token returned by login service to check if currently logged User is authorized to perform this action.
+             type: string
+             required: true
+             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+          body:
+            application/json:
+              example: |
+                       {
+                        "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjUsImFjdGlvbiI6InJlY292ZXIiLCJleHAiOjE0NDA5MDA1NjUsImlhdCI6MTQ0MDg5OTM2NX0.BcimZBODaEjKclxkbQr4nICVZpvqzbweEGNZ_68G_dw"
+                       }
+          responses:
+            200:
 #  put:
 
 #/channels:
