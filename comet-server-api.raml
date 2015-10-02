@@ -413,6 +413,45 @@ version: v1
                   "integrations": []
                 }
 
+    delete:
+      description: Delete a Project of currently logged User ownership.
+      headers:
+        Authorization:
+         description: |
+           Token returned by login service to check if currently logged User is authorized to perform this action.
+         type: string
+         required: true
+         example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+      responses:
+        200:
+
+    /close:
+      delete:
+        description: Closes a Project of currently logged User ownership.
+        headers:
+          Authorization:
+           description: |
+             Token returned by login service to check if currently logged User is authorized to perform this action.
+           type: string
+           required: true
+           example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+        responses:
+          200:
+
+    /members:
+      /{member_id}:
+        delete:
+          description: Allows currently logged User to remove a Project's member if currently logged User is the Project's owner.
+          headers:
+            Authorization:
+             description: |
+               Token returned by login service to check if currently logged User is authorized to perform this action.
+             type: string
+             required: true
+             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+          responses:
+            200:
+
     /invitations:
       post:
         description:  Sends invitations to be part of a project to provided email accounts.
