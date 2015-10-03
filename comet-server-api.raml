@@ -498,9 +498,268 @@ version: v1
                        }
           responses:
             200:
-#  put:
 
-#/channels:
-#  get:
-#  post:
-#  put:
+    /channels:
+      post:
+        description: Create new Channel.
+        headers:
+          Authorization:
+           description: |
+             Token returned by login service to check if currently logged User is authorized to perform this action.
+           type: string
+           required: true
+           example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+        body:
+          application/json:
+            schema: |
+              {
+                "properties": {
+                    "name": {
+                        "required": true,
+                        "type": "string"
+                    },
+                    "description": {
+                        "required": true,
+                        "type": "string"
+                    },
+                    "type": {
+                        "required": true,
+                        "type": "char",
+                        "allowd_values":"S and P"
+                    },
+                    "members": {
+                        "required": false,
+                        "type": "array"
+                    }
+                },
+                "required": true,
+                "type": "object"
+              }
+            example: |
+              {
+                "name":"the_channel_name",
+                "description":"the_channel_desc",
+                "type":"S",
+                "members":[
+                          {
+                            "id":1
+                          },
+                          {
+                            "id":2
+                          }
+                          ]
+              }
+        responses:
+          200:
+            description:
+            body:
+              application/json:
+                example: |
+                  {
+                    "id": 3,
+                    "name": "the first channel",
+                    "description": "the desc",
+                    "createdAt": "2015-10-03T14:25:51.870Z",
+                    "type": "S",
+                    "state": "O",
+                    "members": [
+                      {
+                        "id": 2,
+                        "email": "user@gmail.com",
+                        "profilePicture": "/static/0.33087815903127193avatar.png",
+                        "firstName": "first_name",
+                        "lastName": "last_name",
+                        "alias": "alias",
+                        "createdAt": "2015-09-15T04:13:54.564Z"
+                      }
+                    ],
+                    "integrations": []
+                  }
+
+      get:
+        description: Get all Project's Channels information ordered by createdAt date showing the last created first.
+        headers:
+          Authorization:
+           description: |
+             Token returned by login service to check if currently logged User is authorized to perform this action.
+           type: string
+           required: true
+           example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+        responses:
+          200:
+            description:
+            body:
+              application/json:
+                example: |
+                  [
+                    {
+                      "id": 3,
+                      "name": "the first channel",
+                      "description": "the desc",
+                      "createdAt": "2015-10-03T14:25:51.870Z",
+                      "type": "S",
+                      "state": "O",
+                      "members": [
+                        {
+                          "id": 2,
+                          "email": "member1@gmail.com",
+                          "profilePicture": "/static/0.33087815903127193avatar.png",
+                          "firstName": "member",
+                          "lastName": "member",
+                          "alias": "mebermember",
+                          "createdAt": "2015-09-15T04:13:54.564Z"
+                        }
+                      ],
+                      "integrations": []
+                    },
+                    {
+                      "id": 2,
+                      "name": "the second channel",
+                      "description": "the desc",
+                      "createdAt": "2015-10-01T02:59:50.280Z",
+                      "type": "S",
+                      "state": "O",
+                      "members": [
+                        {
+                          "id": 2,
+                          "email": "member2@gmail.com",
+                          "profilePicture": "/static/0.33087815903127193saucedojuavatar.png",
+                          "firstName": "member2",
+                          "lastName": "member2",
+                          "alias": "membermember2",
+                          "createdAt": "2015-09-15T04:13:54.564Z"
+                        }
+                      ],
+                      "integrations": []
+                    }
+                  ]
+
+      /{channel_id}:
+        get:
+          description: Get Channel's information.
+          headers:
+            Authorization:
+             description: |
+               Token returned by login service to check if currently logged User is authorized to perform this action.
+             type: string
+             required: true
+             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+          responses:
+            200:
+              description:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "id": 3,
+                      "name": "the first channel",
+                      "description": "the desc",
+                      "createdAt": "2015-10-03T14:25:51.870Z",
+                      "type": "S",
+                      "state": "O",
+                      "members": [
+                        {
+                          "id": 2,
+                          "email": "member1@gmail.com",
+                          "profilePicture": "/static/0.33087815903127193avatar.png",
+                          "firstName": "member",
+                          "lastName": "member",
+                          "alias": "mebermember",
+                          "createdAt": "2015-09-15T04:13:54.564Z"
+                        }
+                      ],
+                      "integrations": []
+                    }
+        /members:
+          put:
+            description: Allows Project's User to add other Project's Users to a Project's Channel.
+            headers:
+              Authorization:
+               description: |
+                 Token returned by login service to check if currently logged User is authorized to perform this action.
+               type: string
+               required: true
+               example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+            body:
+              application/json:
+                schema: |
+                  {
+                    "properties": {
+                        "members": {
+                            "required": true,
+                            "type": "array"
+                        }
+                    },
+                    "required": true,
+                    "type": "object"
+                  }
+                example: |
+                  {
+                    "members":[
+                              {
+                                "id":1
+                              },
+                              {
+                                "id":2
+                              }
+                              ]
+                  }
+            responses:
+              200:
+                description:
+                body:
+                  application/json:
+                    example: |
+                      {
+                        "id": 3,
+                        "name": "the first channel",
+                        "description": "the desc",
+                        "createdAt": "2015-10-03T14:25:51.870Z",
+                        "type": "S",
+                        "state": "O",
+                        "members": [
+                          {
+                            "id": 1,
+                            "email": "member1@gmail.com",
+                            "profilePicture": "/static/0.33087815903127193avatar.png",
+                            "firstName": "member",
+                            "lastName": "member",
+                            "alias": "mebermember",
+                            "createdAt": "2015-09-15T04:13:54.564Z"
+                          },
+                          {
+                            "id": 2,
+                            "email": "member1@gmail.com",
+                            "profilePicture": "/static/0.33087815903127193avatar.png",
+                            "firstName": "member",
+                            "lastName": "member",
+                            "alias": "mebermember",
+                            "createdAt": "2015-09-15T04:13:54.564Z"
+                          }
+                        ],
+                        "integrations": []
+                      }
+        delete:
+          description: Delete a Channel of a Project.
+          headers:
+            Authorization:
+             description: |
+               Token returned by login service to check if currently logged User is authorized to perform this action.
+             type: string
+             required: true
+             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+          responses:
+            200:
+
+        /close:
+          delete:
+            description: Close a Project's Channel.
+            headers:
+              Authorization:
+               description: |
+                 Token returned by login service to check if currently logged User is authorized to perform this action.
+               type: string
+               required: true
+               example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+            responses:
+              200:
