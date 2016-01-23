@@ -763,3 +763,76 @@ version: v1
                example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
             responses:
               200:
+
+/search:
+  /projects:
+    /{project_id}:
+      /users:
+        get:
+          description: Get Project's Users whose email, firstName, lastName or alias match provided string. No partial matches, only full words. |
+                        In case more than one word is provided, search engine will return records which fully match those words.
+
+          queryParameters:
+           q:
+             displayName: q
+             type: string
+             description: search string
+             example: Mary Roach
+             required: true
+
+          headers:
+            Authorization:
+             description: |
+               Token returned by login service to check if currently logged User is authorized to perform this action.
+             type: string
+             required: true
+             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+          responses:
+            200:
+              description: Collection of Users that match provided search string within provided project.
+              body:
+                application/json:
+                  example: |
+                    {
+                      "users": [
+                        {
+                          "id": user_id,
+                          "alias": "useralias",
+                          "firstName": "userName",
+                          "lastName": "userLastName",
+                          "email": "user@email.com"
+                        }
+                      ]
+                    }
+            400:
+              description: Server rejected the request for several reasons, take a look at the result.
+              body:
+                application/json:
+                  example: |
+                    {
+                      "errors": {
+                        "q": "Por favor ingrese una cadena de búsqueda válida.",
+                        "project_id": 'Por favor ingrese el id de proyecto.'
+                      }
+                    }
+            403:
+              description: Provided User does not have access to requested Project's information.
+              body:
+                application/json:
+                  example: |
+                    {
+                      "errors": {
+                        "all": "El usuario no puede acceder al proyecto solicitado."
+                      }
+                    }
+            404:
+              description: Provided Project could not be found.
+              body:
+                application/json:
+                  example: |
+                    {
+                      "errors": {
+                        "all": "No se puede encontrar ningún proyecto con el id provisto."
+                      }
+                    }
