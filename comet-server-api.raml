@@ -764,6 +764,54 @@ version: v1
             responses:
               200:
 
+        /messages:
+          /{message_id}:
+            get:
+              description: Retrieve Channel's messages by id, and some surrounding messages.
+
+              queryParameters:
+                limit:
+                      displayName: limit
+                      type: integer
+                      description: max amount of messages to be returned from provided id.
+                      example: 5
+                      required: false
+                direction:
+                          displayName: direction
+                          type: string
+                          description: Direction of the surrounding messages from the one with provided id. Options are backwards or forwards.
+                          example: backwards
+                          required: false
+              headers:
+                Authorization:
+                 description: |
+                   Token returned by login service to check if currently logged User is authorized to perform this action.
+                 type: string
+                 required: true
+                 example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+              responses:
+                200:
+                  description: Notice that provided example response body is related to a 'common' Channel. On 'direct' Channels, response body is different, check "search/projects/:project_id/messages" response.
+                  body:
+                    application/json:
+                      example: |
+                        {
+                          "messages": [
+                            {
+                              "message": {
+                                "id": 20,
+                                "text": "ja",
+                                "link": "",
+                                "user": 3,
+                                "type": 1,
+                                "date": "2016-01-25T01:59:41.349Z",
+                                "integrationId": null
+                              }
+                            }
+                          ]
+                        }
+
 /search:
   /projects:
     /{project_id}:
