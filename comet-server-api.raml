@@ -837,3 +837,192 @@ version: v1
                         "all": "No se puede encontrar ningún proyecto con el id provisto."
                       }
                     }
+
+      /messages:
+        get:
+          description: Look for messages whose content includes provided search paramater within the Project's Channels the currently logged User is allowed to see.
+          queryParameters:
+           q:
+             displayName: q
+             type: string
+             description: search string
+             example: Juan
+             required: true
+
+          headers:
+            Authorization:
+             description: |
+               Token returned by login service to check if currently logged User is authorized to perform this action.
+             type: string
+             required: true
+             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+          responses:
+            200:
+              description: Collection of Messages that match provided search string within provided Project's common&direct Channels.
+              body:
+                application/json:
+                  example: |
+                    {
+                      "project": {
+                        "channels": {
+                          "common": [
+                            {
+                              "id": 1,
+                              "messages": [
+                                {
+                                  "id": 17,
+                                  "text": "the content",
+                                  "user": 3,
+                                  "type": 1,
+                                  "date": "2016-01-25T01:59:25.706Z"
+                                }
+                              ]
+                            }
+                          ],
+                          "direct": [
+                            {
+                              "id": "Direct_1_3",
+                              "messages": [
+                                {
+                                  "id": 8,
+                                  "content": "the content2",
+                                  "OriginUserId": 3,
+                                  "DestinationUserId": 1,
+                                  "ProjectId": 2,
+                                  "MessageTypeId": 1,
+                                  "channel": "Direct_1_3",
+                                  "sentDateTimeUTC": "2015-11-01T20:03:55.048Z"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+            400:
+              description: Server rejected the request for several reasons, take a look at the result.
+              body:
+                application/json:
+                  example: |
+                    {
+                      "errors": {
+                        "q": "Por favor ingrese una cadena de búsqueda válida.",
+                        "project_id": 'Por favor ingrese el id de proyecto.'
+                      }
+                    }
+            403:
+              description: Provided User does not have access to requested Project's information.
+              body:
+                application/json:
+                  example: |
+                    {
+                      "errors": {
+                        "all": "El usuario no puede acceder al proyecto solicitado."
+                      }
+                    }
+            404:
+              description: Provided Project could not be found.
+              body:
+                application/json:
+                  example: |
+                    {
+                      "errors": {
+                        "all": "No se puede encontrar ningún proyecto con el id provisto."
+                      }
+                    }
+
+        /channels:
+          /{channel_id}:
+            get:
+              description: Look for messages whose content includes provided search paramater within the provided Channel if currently logged User is allowed to see it.
+              queryParameters:
+               q:
+                 displayName: q
+                 type: string
+                 description: search string
+                 example: Juan
+                 required: true
+
+              headers:
+                Authorization:
+                 description: |
+                   Token returned by login service to check if currently logged User is authorized to perform this action.
+                 type: string
+                 required: true
+                 example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+
+              responses:
+                200:
+                  description: Collection of Messages that match provided search string within provided Channel. Notice that provided response example is for a search on a common channel. If search is over a direct channel, response won't include 'common' key but 'direct' key and the "messages" key structure will be equal to the exposed at "direct" key of "search/projects/:project_id/messages" response.
+                  body:
+                    application/json:
+                      example: |
+                        {
+                          "project": {
+                            "channels": {
+                              "common": [
+                                {
+                                  "id": 39,
+                                  "messages": [
+                                    {
+                                      "id": 20,
+                                      "text": "je je",
+                                      "user": 3,
+                                      "type": 1,
+                                      "date": "2016-01-25T01:59:41.349Z"
+                                    },
+                                    {
+                                      "id": 18,
+                                      "text": "je je",
+                                      "user": 3,
+                                      "type": 1,
+                                      "date": "2016-01-25T01:59:41.349Z"
+                                    },
+                                    {
+                                      "id": 11,
+                                      "text": "je",
+                                      "user": 3,
+                                      "type": 1,
+                                      "date": "2016-01-16T14:12:08.872Z"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        }
+
+                400:
+                  description: Server rejected the request for several reasons, take a look at the result.
+                  body:
+                    application/json:
+                      example: |
+                        {
+                          "errors": {
+                            "q": "Por favor ingrese una cadena de búsqueda válida.",
+                            "project_id": 'Por favor ingrese el id de proyecto.',
+                            "channel_id":"Por favor ingrese el id de canal."
+                          }
+                        }
+                403:
+                  description: Provided User does not have access to requested Project's information.
+                  body:
+                    application/json:
+                      example: |
+                        {
+                          "errors": {
+                            "all": "El usuario no puede acceder al proyecto solicitado."
+                          }
+                        }
+                404:
+                  description: Provided Project could not be found.
+                  body:
+                    application/json:
+                      example: |
+                        {
+                          "errors": {
+                            "all": "No se puede encontrar ningún proyecto con el id provisto.",
+                            "all2": "No se puede encontrar ningún canal con el id provisto."
+                          }
+                        }

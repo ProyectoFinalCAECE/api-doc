@@ -528,4 +528,109 @@
     "all": "No se puede encontrar ningún proyecto con el id provisto."
   }
 }
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_search_projects__project_id__messages"><span class="parent">/search/projects/{project_id}</span>/messages</a> <span class="methods"><a href="#search_projects__project_id__messages_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_search_projects__project_id__messages" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#search_projects__project_id__messages_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Look for messages whose content includes provided search paramater within the Project&#39;s Channels the currently logged User is allowed to see.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="search_projects__project_id__messages_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/search/projects/{project_id}</span>/messages</h4></div><div class="modal-body"><div class="alert alert-info"><p>Look for messages whose content includes provided search paramater within the Project&#39;s Channels the currently logged User is allowed to see.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#search_projects__project_id__messages_get_request" data-toggle="tab">Request</a></li><li><a href="#search_projects__project_id__messages_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="search_projects__project_id__messages_get_request"><h3>URI Parameters</h3><ul><li><strong>project_id</strong>: <em>required (string)</em></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>Token returned by login service to check if currently logged User is authorized to perform this action.</p><p><strong>Example</strong>:</p><pre>Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI</pre></li></ul><h3>Query Parameters</h3><ul><li><strong>q</strong>: <em>required (string)</em><p>search string</p><p><strong>Example</strong>:</p><pre>Juan</pre></li></ul></div><div class="tab-pane" id="search_projects__project_id__messages_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Collection of Messages that match provided search string within provided Project&#39;s common&amp;direct Channels.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "project": {
+    "channels": {
+      "common": [
+        {
+          "id": 1,
+          "messages": [
+            {
+              "id": 17,
+              "text": "the content",
+              "user": 3,
+              "type": 1,
+              "date": "2016-01-25T01:59:25.706Z"
+            }
+          ]
+        }
+      ],
+      "direct": [
+        {
+          "id": "Direct_1_3",
+          "messages": [
+            {
+              "id": 8,
+              "content": "the content2",
+              "OriginUserId": 3,
+              "DestinationUserId": 1,
+              "ProjectId": 2,
+              "MessageTypeId": 1,
+              "channel": "Direct_1_3",
+              "sentDateTimeUTC": "2015-11-01T20:03:55.048Z"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Server rejected the request for several reasons, take a look at the result.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "errors": {
+    "q": "Por favor ingrese una cadena de búsqueda válida.",
+    "project_id": &#39;Por favor ingrese el id de proyecto.&#39;
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/403" target="_blank">403</a></h2><p>Provided User does not have access to requested Project&#39;s information.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "errors": {
+    "all": "El usuario no puede acceder al proyecto solicitado."
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Provided Project could not be found.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "errors": {
+    "all": "No se puede encontrar ningún proyecto con el id provisto."
+  }
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_search_projects__project_id__messages_channels__channel_id_"><span class="parent">/search/projects/{project_id}/messages/channels</span>/{channel_id}</a> <span class="methods"><a href="#search_projects__project_id__messages_channels__channel_id__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_search_projects__project_id__messages_channels__channel_id_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#search_projects__project_id__messages_channels__channel_id__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Look for messages whose content includes provided search paramater within the provided Channel if currently logged User is allowed to see it.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="search_projects__project_id__messages_channels__channel_id__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/search/projects/{project_id}/messages/channels</span>/{channel_id}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Look for messages whose content includes provided search paramater within the provided Channel if currently logged User is allowed to see it.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#search_projects__project_id__messages_channels__channel_id__get_request" data-toggle="tab">Request</a></li><li><a href="#search_projects__project_id__messages_channels__channel_id__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="search_projects__project_id__messages_channels__channel_id__get_request"><h3>URI Parameters</h3><ul><li><strong>project_id</strong>: <em>required (string)</em></li><li><strong>channel_id</strong>: <em>required (string)</em></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>Token returned by login service to check if currently logged User is authorized to perform this action.</p><p><strong>Example</strong>:</p><pre>Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI</pre></li></ul><h3>Query Parameters</h3><ul><li><strong>q</strong>: <em>required (string)</em><p>search string</p><p><strong>Example</strong>:</p><pre>Juan</pre></li></ul></div><div class="tab-pane" id="search_projects__project_id__messages_channels__channel_id__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Collection of Messages that match provided search string within provided Channel. Notice that provided response example is for a search on a common channel. If search is over a direct channel, response won&#39;t include &#39;common&#39; key but &#39;direct&#39; key and the "messages" key structure will be equal to the exposed at "direct" key of "search/projects/:project_id/messages" response.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "project": {
+    "channels": {
+      "common": [
+        {
+          "id": 39,
+          "messages": [
+            {
+              "id": 20,
+              "text": "je je",
+              "user": 3,
+              "type": 1,
+              "date": "2016-01-25T01:59:41.349Z"
+            },
+            {
+              "id": 18,
+              "text": "je je",
+              "user": 3,
+              "type": 1,
+              "date": "2016-01-25T01:59:41.349Z"
+            },
+            {
+              "id": 11,
+              "text": "je",
+              "user": 3,
+              "type": 1,
+              "date": "2016-01-16T14:12:08.872Z"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Server rejected the request for several reasons, take a look at the result.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "errors": {
+    "q": "Por favor ingrese una cadena de búsqueda válida.",
+    "project_id": &#39;Por favor ingrese el id de proyecto.&#39;,
+    "channel_id":"Por favor ingrese el id de canal."
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/403" target="_blank">403</a></h2><p>Provided User does not have access to requested Project&#39;s information.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "errors": {
+    "all": "El usuario no puede acceder al proyecto solicitado."
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Provided Project could not be found.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "errors": {
+    "all": "No se puede encontrar ningún proyecto con el id provisto.",
+    "all2": "No se puede encontrar ningún canal con el id provisto."
+  }
+}
 </code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#accounts">/accounts</a></li><li><a href="#users">/users</a></li><li><a href="#projects">/projects</a></li><li><a href="#search">/search</a></li></ul></div></div></div></div></body></html>
