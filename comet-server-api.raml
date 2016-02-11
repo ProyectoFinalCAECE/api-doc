@@ -896,6 +896,19 @@ version: v1
              description: search string
              example: Juan
              required: true
+           limit:
+             displayName: limit
+             type: integer
+             description: max amount of results to be returned
+             example: 10
+             required: false
+             default: 25
+           last_id:
+            displayName: last_id
+            type: integer
+            description: id to start search from
+            example: 1
+            required: false
 
           headers:
             Authorization:
@@ -991,6 +1004,19 @@ version: v1
                  description: search string
                  example: Juan
                  required: true
+               limit:
+                 displayName: limit
+                 type: integer
+                 description: max amount of results to be returned
+                 example: 10
+                 required: false
+                 default: 25
+               last_id:
+                displayName: last_id
+                type: integer
+                description: id to start search from
+                example: 1
+                required: false
 
               headers:
                 Authorization:
