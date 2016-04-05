@@ -169,7 +169,7 @@ version: v1
                         "lastName": "test",
                         "alias": "testtest",
                         "email": "test@test.com",
-                        "profilePicture": null,
+                        "profilePicture": "null",
                         "confirmed": "true"
                       }
                     }
@@ -437,6 +437,301 @@ version: v1
            example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
         responses:
           200:
+
+    /calls:
+      get:
+        description: Retrieve all the Calls of provided channel_id
+        headers:
+          Authorization:
+           description: |
+             Token returned by login service to check if currently logged User is authorized to perform this action.
+           type: string
+           required: true
+           example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  [
+                    {
+                      "id": 1,
+                      "summary": "null",
+                      "startHour": "2016-03-26T18:56:47.422Z",
+                      "endHour": ""null"",
+                      "frontendId": "null",
+                      "createdAt": "2016-03-26T18:56:47.432Z",
+                      "updatedAt": "2016-03-26T18:56:47.432Z",
+                      "ChannelId": 1,
+                      "OwnerId": 1002,
+                      "members": [
+                        {
+                          "id": 1,
+                          "alias": "SaucedoJI",
+                          "profilePicture": "/static/profilePicture-1002-1457846872245.jpg",
+                          "createdAt": "2016-03-26T18:56:47.716Z",
+                          "updatedAt": "2016-03-26T18:56:47.716Z",
+                          "CallId": 1,
+                          "UserId": 1002
+                        }
+                      ]
+                    },
+                    {
+                      "id": 34,
+                      "summary": "null",
+                      "startHour": "2016-03-27T02:51:39.577Z",
+                      "endHour": "null",
+                      "frontendId": "null",
+                      "createdAt": "2016-03-27T02:51:39.587Z",
+                      "updatedAt": "2016-03-27T02:51:39.587Z",
+                      "ChannelId": 1,
+                      "OwnerId": 1002,
+                      "members": [
+                        {
+                          "id": 34,
+                          "alias": "SaucedoJI",
+                          "profilePicture": "/static/profilePicture-1002-1457846872245.jpg",
+                          "createdAt": "2016-03-27T02:51:40.119Z",
+                          "updatedAt": "2016-03-27T02:51:40.119Z",
+                          "CallId": 34,
+                          "UserId": 1002
+                        }
+                      ]
+                    },
+                    {
+                      "id": 37,
+                      "summary": "null",
+                      "startHour": "2016-03-27T03:25:25.694Z",
+                      "endHour": "null",
+                      "frontendId": "null",
+                      "createdAt": "2016-03-27T03:25:25.708Z",
+                      "updatedAt": "2016-03-27T03:25:25.708Z",
+                      "ChannelId": 1,
+                      "OwnerId": 1002,
+                      "members": [
+                        {
+                          "id": 37,
+                          "alias": "SaucedoJI",
+                          "profilePicture": "/static/profilePicture-1002-1457846872245.jpg",
+                          "createdAt": "2016-03-27T03:25:26.243Z",
+                          "updatedAt": "2016-03-27T03:25:26.243Z",
+                          "CallId": 37,
+                          "UserId": 1002
+                        }
+                      ]
+                    }
+                  ]
+
+      post:
+        description: Creates a new Call and associates it to provided channel_id. Server adds startHour. Also, a message is created at 'Messages' table and a notification is pushed. Also currently logged user is associated.
+        headers:
+          Authorization:
+           description: |
+             Token returned by login service to check if currently logged User is authorized to perform this action.
+           type: string
+           required: true
+           example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+        body:
+          application/json:
+            example: |
+              {
+                "frontend_id": "asd-123"
+              }
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "id": 43,
+                    "summary": "null",
+                    "startHour": "2016-04-05T03:31:57.554Z",
+                    "endHour": "null",
+                    "frontendId": "asd-123",
+                    "createdAt": "2016-04-05T03:31:57.566Z",
+                    "updatedAt": "2016-04-05T03:31:57.566Z",
+                    "ChannelId": 1,
+                    "OwnerId": 1002,
+                    "members": [
+                      {
+                        "id": 45,
+                        "alias": "SaucedoJI",
+                        "profilePicture": "/static/profilePicture-1002-1457846872245.jpg",
+                        "createdAt": "2016-04-05T03:31:58.002Z",
+                        "updatedAt": "2016-04-05T03:31:58.002Z",
+                        "CallId": 43,
+                        "UserId": 1002
+                      }
+                    ]
+                  }
+
+      /{call_id}:
+        get:
+          description: Retrieve a certain call by id.
+          headers:
+            Authorization:
+             description: |
+               Token returned by login service to check if currently logged User is authorized to perform this action.
+             type: string
+             required: true
+             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "id": 42,
+                      "summary": ""null"",
+                      "startHour": "2016-04-05T02:54:11.363Z",
+                      "endHour": ""null"",
+                      "frontendId": ""null"",
+                      "createdAt": "2016-04-05T02:54:11.372Z",
+                      "updatedAt": "2016-04-05T02:54:11.372Z",
+                      "ChannelId": 1,
+                      "OwnerId": 1002,
+                      "members": [
+                        {
+                          "id": 43,
+                          "alias": "SaucedoJI",
+                          "profilePicture": "/static/profilePicture-1002-1457846872245.jpg",
+                          "createdAt": "2016-04-05T02:54:11.799Z",
+                          "updatedAt": "2016-04-05T02:54:11.799Z",
+                          "CallId": 42,
+                          "UserId": 1002
+                        }
+                      ]
+                    }
+
+        put:
+          description: Updates a Call (end date and frontend_id).
+          headers:
+            Authorization:
+             description: |
+               Token returned by login service to check if currently logged User is authorized to perform this action.
+             type: string
+             required: true
+             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+          body:
+           application/json:
+            example: |
+              {
+                "end_hour": "2016-04-05T03:55:11.363Z",
+                "frontend_id": "asd-124"
+              }
+
+          responses:
+            200:
+              body:
+               application/json:
+                example: |
+                  {
+                    "id": 43,
+                    "summary": "null",
+                    "startHour": "2016-04-05T03:31:57.554Z",
+                    "endHour": "2016-04-05T03:55:11.363Z",
+                    "frontendId": "asd-124",
+                    "createdAt": "2016-04-05T03:31:57.566Z",
+                    "updatedAt": "2016-04-05T03:34:05.996Z",
+                    "ChannelId": 1,
+                    "OwnerId": 1002,
+                    "members": [
+                      {
+                        "id": 45,
+                        "alias": "SaucedoJI",
+                        "profilePicture": "/static/profilePicture-1002-1457846872245.jpg",
+                        "createdAt": "2016-04-05T03:31:58.002Z",
+                        "updatedAt": "2016-04-05T03:31:58.002Z",
+                        "CallId": 43,
+                        "UserId": 1002
+                      }
+                    ]
+                  }
+
+        /members:
+          put:
+            description: Server stores currently logged User as a member of the Call with provided Id. Server guarantees uniqueness of members.
+            headers:
+              Authorization:
+               description: |
+                 Token returned by login service to check if currently logged User is authorized to perform this action.
+               type: string
+               required: true
+               example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+            responses:
+              200:
+                body:
+                  application/json:
+                    example: |
+                      {
+                        "id": 40,
+                        "summary": "el resumen 2",
+                        "startHour": "2016-03-27T03:27:31.941Z",
+                        "endHour": "2016-03-27T03:29:03.274Z",
+                        "frontendId": "null",
+                        "createdAt": "2016-03-27T03:27:31.943Z",
+                        "updatedAt": "2016-03-27T03:29:03.275Z",
+                        "ChannelId": 1,
+                        "OwnerId": 1002,
+                        "members": [
+                          {
+                            "id": 40,
+                            "alias": "SaucedoJI",
+                            "profilePicture": "/static/profilePicture-1002-1457846872245.jpg",
+                            "createdAt": "2016-03-27T03:27:32.170Z",
+                            "updatedAt": "2016-03-27T03:27:32.170Z",
+                            "CallId": 40,
+                            "UserId": 1002
+                          },
+                          {
+                            "id": 41,
+                            "alias": "DiegoM",
+                            "profilePicture": "/images/avatars/0.2448105465155095juliogascoavatar.png",
+                            "createdAt": "2016-03-27T03:29:26.783Z",
+                            "updatedAt": "2016-03-27T03:29:26.783Z",
+                            "CallId": 40,
+                            "UserId": 1001
+                          }
+                        ]
+                      }
+
+        /summary:
+          put:
+            description: Add a summary to the Call with provided id.
+            headers:
+              Authorization:
+               description: |
+                 Token returned by login service to check if currently logged User is authorized to perform this action.
+               type: string
+               required: true
+               example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+            responses:
+              200:
+                body:
+                  application/json:
+                    example: |
+                      {
+                        "id": 42,
+                        "summary": "resumen de llamada",
+                        "startHour": "2016-04-05T02:54:11.363Z",
+                        "endHour": "2016-04-05T03:28:52.097Z",
+                        "frontendId": "null",
+                        "createdAt": "2016-04-05T02:54:11.372Z",
+                        "updatedAt": "2016-04-05T03:28:52.099Z",
+                        "ChannelId": 1,
+                        "OwnerId": 1002,
+                        "members": [
+                          {
+                            "id": 44,
+                            "alias": "SaucedoJI",
+                            "profilePicture": "/static/profilePicture-1002-1457846872245.jpg",
+                            "createdAt": "2016-04-05T03:23:02.416Z",
+                            "updatedAt": "2016-04-05T03:23:02.416Z",
+                            "CallId": 42,
+                            "UserId": 1002
+                          }
+                        ]
+                      }
 
     /members:
       /{member_id}:
@@ -806,7 +1101,7 @@ version: v1
                                 "user": 3,
                                 "type": 1,
                                 "date": "2016-01-25T01:59:41.349Z",
-                                "integrationId": null
+                                "integrationId": "null"
                               }
                             }
                           ]
