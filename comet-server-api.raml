@@ -1034,6 +1034,46 @@ version: v1
                         ],
                         "integrations": []
                       }
+        /{member_id}:
+          delete:
+            description: Allows Private Channel's member to remove another member from the Channel.
+            headers:
+              Authorization:
+                description: |
+                  Token returned by login service to check if currently logged User is authorized to perform this action.
+                type: string
+                required: true
+                example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjE4LCJlbWFpbCI6ImpAcy5jb20iLCJhbGlhcyI6ImpzIiwiZXhwIjoxNDQzMjAyNjA2LCJpYXQiOjE0NDA2MTA2MDZ9.r3G3_BsRtNJxaCKePgvuesHVgTqHNnWM1ON-XogogJI
+            responses:
+              200:
+                description:
+                body:
+                  application/json:
+                    example: |
+                      {
+                        "all": "El miembro ha sido eliminado exitosamente del canal."
+                      }
+              404:
+                description:
+                body:
+                  application/json:
+                    example: |
+                      {
+                        "errors": {
+                          "all": "El miembro que desea eliminar no forma parte del canal o ha sido eliminado previamente."
+                        }
+                      }
+              403:
+                description:
+                body:
+                  application/json:
+                    example: |
+                      {
+                        "errors": {
+                          "all": "El usuario no puede acceder al canal solicitado."
+                        }
+                      }
+
         delete:
           description: Delete a Channel of a Project.
           headers:
